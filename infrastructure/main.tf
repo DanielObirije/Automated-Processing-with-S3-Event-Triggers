@@ -10,12 +10,6 @@ resource "random_string" "surffix" {
 
 
 locals {
-#   bucket_name         = "{data-processing-bucket}-${random_string.suffix.result}"
-#   lambda_function_name = "data-processing-processor-${random_string.suffix.result}"
-#   error_handler_name   = "data-processing-error-handler-${random_string.suffix.result}"
-#   dlq_name            = "data-processing-dlq-${random_string.suffix.result}"
-#   sns_topic_name      = "data-processing-alerts-${random_string.suffix.result}"
-#   lambda_role_name    = "data-processing-lambda-role-${random_string.suffix.result}"
   bucket_name         = "${var.bucket_name_prefix}-${random_string.suffix.result}"
   lambda_function_name = "${var.project_name}-processor-${random_string.suffix.result}"
   error_handler_name   = "${var.project_name}-error-handler-${random_string.suffix.result}"
@@ -38,4 +32,26 @@ module "s3" {
   common_tags = local.common_tags
 }
 
+module "iam" {
+  source = "./iam"
+  lambda_role_name = local.lambda_function_name
+  common_tags = local.common_tags
+  s3_bucket_arn = module.s3.bucket_arn
+}
 
+module "lambda" {
+  source = "./lambda"
+}
+
+module "sns" {
+  source = "./sns"
+  sns_topic_name = local.sns_topic_name 
+  common_tags = local.common_tags
+}
+
+
+module "sqs" {
+  source = "./sqs"
+  dlq_name = local.dlq_name 
+  common_tags = local.common_tags
+}

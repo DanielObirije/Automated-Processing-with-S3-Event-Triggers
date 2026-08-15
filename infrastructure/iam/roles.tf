@@ -41,6 +41,27 @@ resource "aws_iam_role_policy" "lambda_execution_policy" {
           "${var.s3_bucket_arn}/*"
         ]
       },
+      {
+        Effect = "Allow"
+        Action = [
+          "sqs:SendMessage",
+          "sqs:GetQueueAttributes",
+          "sqs:ReceiveMessage",
+          "sqs:DeleteMessage"
+        ]
+        Resource = [
+          var.dlq_arn
+        ]
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "sns:Publish"
+        ]
+        Resource = [
+          var.sns_topic_arn
+        ]
+      }
     ]
   })
 }

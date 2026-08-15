@@ -11,3 +11,13 @@ variable "s3_bucket_arn" {
   description = "ARN of the S3 data processing bucket"
   type        = string
 }
+
+variable "sns_topic_arn" {
+  description = "ARN of the Sns data processing alart"
+  type        = string
+}
+
+variable "dlq_arn" {
+  description = "ARN of the S3 data processing bucket"
+  type        = string
+}

@@ -37,6 +37,8 @@ module "iam" {
   lambda_role_name = local.lambda_function_name
   common_tags = local.common_tags
   s3_bucket_arn = module.s3.bucket_arn
+  sns_topic_arn = module.sns.sns_arn
+  dlq_arn  =  module.sqs.dlq_arn
 }
 
 module "lambda" {

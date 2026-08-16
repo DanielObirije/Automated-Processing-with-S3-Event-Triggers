@@ -19,3 +19,22 @@ variable "enable_encryption" {
   type        = bool
   default     = true
 }
+
+variable "data_prefix" {
+  description = "S3 prefix for data files that should trigger processing"
+  type        = string
+  default     = "data/"
+}
+
+
+variable "lambda_function_arn" {
+  description = "ARN for lambda function data processor"
+  type = string
+}
+
+
+variable "aws_lambda_permission" {
+  description = "lambda permission"
+  type = string
+}
+

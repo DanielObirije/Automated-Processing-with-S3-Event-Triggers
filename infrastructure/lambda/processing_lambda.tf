@@ -27,6 +27,7 @@ resource "aws_lambda_function" "data_processor" {
     target_arn = var.dlq_url
   }
   depends_on = [
+     aws_cloudwatch_log_group.data_processor_logs,
      var.lambda_execution_attachment,
      var.lambda_execution_policy
    ]
@@ -40,7 +41,17 @@ resource "aws_lambda_function" "data_processor" {
 resource "aws_lambda_permission" "s3_invoke_lambda" {
   statement_id  = "AllowExecutionFromS3Bucket"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.data_processor
+  function_name = aws_lambda_function.data_processor.function_name
    principal     = "s3.amazonaws.com"
    source_arn =  var.s3_bucket_arn
+}
+
+
+resource "aws_cloudwatch_log_group" "data_processor_logs" {
+  name = "/aws/lambda/${var.lambda_function_name}"
+  retention_in_days = var.cloudwatch_log_retention
+  tags = merge(var.common_tags,{
+    Name = "/aws/lambda/${var.lambda_function_name}"
+    Purpose = "Data processing Lambda logs"
+  })
 }

@@ -71,3 +71,15 @@ variable "lambda_execution_policy" {
   description = "ARN of the lambda execuation policy"
   type        = string
 }
+
+
+variable "cloudwatch_log_retention" {
+  description = "CloudWatch log retention period in days"
+  type        = number
+  default     = 14
+  
+  validation {
+    condition = contains([1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1827, 3653], var.cloudwatch_log_retention)
+    error_message = "CloudWatch log retention must be one of: 1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1827, 3653."
+  }
+}

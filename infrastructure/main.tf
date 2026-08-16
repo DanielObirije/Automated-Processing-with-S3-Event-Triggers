@@ -30,6 +30,8 @@ module "s3" {
   source = "./s3"
   bucket_name = local.bucket_name
   common_tags = local.common_tags
+  lambda_function_arn = module.lambda.lambda_function_arn
+  aws_lambda_permission = module.lambda.aws_lambda_permission
 }
 
 module "iam" {
@@ -67,3 +69,12 @@ module "sqs" {
   dlq_name = local.dlq_name 
   common_tags = local.common_tags
 }
+
+module "cloudwatch" {
+  source = "./cloudwatch"
+ lambda_role_name = local.lambda_function_name
+  sns_topic_arn = module.sns.sns_arn
+  common_tags =  local.common_tags
+  dlq_name =  module.sqs.dlq_name
+}
+

@@ -1,7 +1,11 @@
 variable "lambda_function_name" {
   description = "Name of the lambda function name"
   type        = string
-  default     = "data-processing"
+}
+
+variable "error_handler_name" {
+  description = "Name of the lambda function error handler"
+  type        = string
 }
 
 variable "lambda_execution_arn"  {
@@ -9,13 +13,25 @@ variable "lambda_execution_arn"  {
   type        = string
 }
 
-variable "dlq_arn"  {
+
+
+variable "sns_topic_arn"  {
   description = "ARN of the sns data processing alart"
   type        = string
 }
 
+variable "s3_bucket_arn" {
+  description = "ARN of s3"
+  type        = string
+}
+
+variable "dlq_arn"  {
+  description = "ARN of the dlq data processing alart"
+  type        = string
+}
+
 variable "dlq_url"  {
-  description = "URL of the sns data processing alart"
+  description = "URL of the dlq data processing alart"
   type        = string
 }
 
@@ -46,12 +62,12 @@ variable "common_tags" {
   type        = map(string)
 }
 
-variable "lambda_execution_attachment_arn"  {
+variable "lambda_execution_attachment"  {
   description = "ARN of the lambda execuation attachment"
   type        = string
 }
 
-variable "lambda_execution_policy_arn" {
+variable "lambda_execution_policy" {
   description = "ARN of the lambda execuation policy"
   type        = string
 }

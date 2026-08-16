@@ -7,3 +7,37 @@ data "archive_file" "error_handler_zip" {
    filename = "handler.py"
   }
 }
+
+resource "aws_lambda_function" "error_handler" {
+   filename = data.archive_file.error_handler_zip.output_path
+   function_name = var.error_handler_name
+   role = var.lambda_execution_arn
+   handler = "error_handler.lambda_handler"
+   runtime = "python3.9"
+   timeout = var.data_processing_timeout
+   memory_size = var.data_processing_memory
+   source_code_hash = data.archive_file.error_handler_zip.output_base64sha256
+
+   environment {
+    variables = {
+     SNS_TOPIC_ARN = var.sns_topic_arn
+    }
+  }
+  depends_on = [
+     var.lambda_execution_attachment,
+     var.lambda_execution_policy
+   ]
+
+  tags = merge(var.common_tags,{
+    Name = var.lambda_function_name
+    Purpose = "Error handler Lambda function"
+  })
+
+} 
+
+resource "aws_lambda_event_source_mapping" "dlq_to_error_handler" {
+  event_source_arn = var.dlq_arn
+  function_name = aws_lambda_function.error_handler.arn
+  batch_size = 10
+  maximum_batching_window_in_seconds = 5
+}

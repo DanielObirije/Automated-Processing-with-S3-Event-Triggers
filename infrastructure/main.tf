@@ -43,6 +43,13 @@ module "iam" {
 
 module "lambda" {
   source = "./lambda"
+  lambda_function_name = local.lambda_function_name
+  lambda_execution_arn = module.iam.lambda_execution_arn
+   dlq_arn  =  module.sqs.dlq_arn
+   dlq_url  = module.sqs.dlq_url
+   common_tags =  local.common_tags
+   lambda_execution_attachment_arn =  module.iam.lambda_execution_role_policy_attachment_arn
+  lambda_execution_policy_arn =  module.iam.lambda_execution_role_policy_arn
 }
 
 module "sns" {

@@ -3,6 +3,10 @@
 
 A simple event-driven AWS project that automatically processes files uploaded to an S3 bucket.
 
+This project uses **Amazon S3 event notifications** to automatically trigger **AWS Lambda** when a new file is uploaded to an S3 bucket.
+
+Instead of polling the bucket manually or relying on scheduled jobs, S3 generates an event when a matching object is created. The event triggers the processing Lambda, which performs the required file-processing operations.
+
 ## How It Works
 
 1. A file is uploaded to S3.

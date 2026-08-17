@@ -24,7 +24,7 @@ resource "aws_lambda_function" "error_handler" {
     }
   }
   depends_on = [
-    aws_cloudwatch_log_group.data_processor_logs,
+    aws_cloudwatch_log_group.error_handler_logs,
      var.lambda_execution_attachment,
      var.lambda_execution_policy
    ]
@@ -43,7 +43,7 @@ resource "aws_lambda_event_source_mapping" "dlq_to_error_handler" {
   maximum_batching_window_in_seconds = 5
 }
 
-resource "aws_cloudwatch_log_group" "data_processor_logs" {
+resource "aws_cloudwatch_log_group" "error_handler_logs" {
   name = "/aws/lambda/${var.error_handler_name}"
   retention_in_days = var.cloudwatch_log_retention
   tags = merge(var.common_tags,{

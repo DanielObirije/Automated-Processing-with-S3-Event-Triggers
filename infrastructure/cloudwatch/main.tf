@@ -1,6 +1,6 @@
  resource "aws_cloudwatch_metric_alarm" "lambda_errors" {
    count = var.enable_monitoring ? 1 : 0
-   alarm_name = "${var.lambda_role_name}-errors"
+   alarm_name = "${var.lambda_function_name}-errors"
    comparison_operator = "GreaterThanOrEqualToThreshold"
    evaluation_periods = "1"
    metric_name =  "Errors"
@@ -12,11 +12,11 @@
    alarm_actions = [var.sns_topic_arn]
 
     depends_on ={
-        function_name = var.lambda_role_name
+        function_name = var.lambda_function_name
     }
 
     tags = merge(var.common_tags,{
-        Name  = "${var.lambda_role_name}-errors"
+        Name  = "${var.lambda_function_name}-errors"
          Purpose = "Lambda error monitoring"
     })
  }
@@ -24,7 +24,7 @@
 
 resource "aws_cloudwatch_metric_alarm" "sqs_messages" {
    count = var.enable_monitoring ? 1 : 0
-   alarm_name = "${var.lambda_role_name}-errors"
+   alarm_name = "${var.error_handler_name}-errors"
    comparison_operator = "GreaterThanThreshold"
    evaluation_periods = "1"
    metric_name         = "ApproximateNumberOfVisibleMessages"

@@ -10,12 +10,12 @@ resource "random_string" "surffix" {
 
 
 locals {
-  bucket_name         = "${var.bucket_name_prefix}-${random_string.suffix.result}"
-  lambda_function_name = "${var.project_name}-processor-${random_string.suffix.result}"
-  error_handler_name   = "${var.project_name}-error-handler-${random_string.suffix.result}"
-  dlq_name            = "${var.project_name}-dlq-${random_string.suffix.result}"
-  sns_topic_name      = "${var.project_name}-alerts-${random_string.suffix.result}"
-  lambda_role_name    = "${var.project_name}-lambda-role-${random_string.suffix.result}"
+  bucket_name         = "${var.bucket_name_prefix}-${random_string.surffix.result}"
+  lambda_function_name = "${var.project_name}-processor-${random_string.surffix.result}"
+  error_handler_name   = "${var.project_name}-error-handler-${random_string.surffix.result}"
+  dlq_name            = "${var.project_name}-dlq-${random_string.surffix.result}"
+  sns_topic_name      = "${var.project_name}-alerts-${random_string.surffix.result}"
+  lambda_role_name    = "${var.project_name}-lambda-role-${random_string.surffix.result}"
 
   common_tags = merge(
     {
@@ -72,9 +72,10 @@ module "sqs" {
 
 module "cloudwatch" {
   source = "./cloudwatch"
- lambda_role_name = local.lambda_function_name
+  lambda_function_name = module.lambda.aws_lambda_permission_name
+  error_handler_name = module.lambda.aws_lambda_error_handler_name
   sns_topic_arn = module.sns.sns_arn
   common_tags =  local.common_tags
-  dlq_name =  module.sqs.dlq_name
+  dlq_name = module.sqs.dlq_name
 }
 

@@ -4,8 +4,13 @@ variable "enable_monitoring" {
   default     = true
 }
 
-variable "lambda_role_name" {
-  description = "lambda  role name prefix"
+variable "lambda_function_name" {
+  description = "lambda  processor  name prefix"
+  type        = string
+}
+
+variable "error_handler_name" {
+  description = "lambda error handler name prefix"
   type        = string
 }
 

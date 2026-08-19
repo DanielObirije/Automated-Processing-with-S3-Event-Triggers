@@ -11,7 +11,7 @@
    alarm_description   = "This metric monitors Lambda function errors"
    alarm_actions = [var.sns_topic_arn]
 
-    depends_on ={
+    dimensions = {
         function_name = var.lambda_function_name
     }
 
@@ -35,7 +35,7 @@ resource "aws_cloudwatch_metric_alarm" "sqs_messages" {
    alarm_description   = "This metric monitors DLQ message count"
    alarm_actions = [var.sns_topic_arn]
 
-   depends_on = {
+   dimensions = {
      QueueName = var.dlq_name
    }
 

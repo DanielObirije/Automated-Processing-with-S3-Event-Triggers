@@ -1,6 +1,6 @@
 resource "aws_iam_role" "lambda_execution_role" {
   name = var.lambda_role_name
-  assume_role_policy = jsondecode({
+  assume_role_policy = jsonencode({
     version = "2012-10-17"
     Statement = [
         {

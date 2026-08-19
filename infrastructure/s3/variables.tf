@@ -35,6 +35,9 @@ variable "lambda_function_arn" {
 
 variable "aws_lambda_permission" {
   description = "lambda permission"
-  type = string
+  type = object({
+    id  = string
+    arn = string
+  })
 }
 

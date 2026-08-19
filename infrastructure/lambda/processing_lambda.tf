@@ -26,11 +26,11 @@ resource "aws_lambda_function" "data_processor" {
   dead_letter_config {
     target_arn = var.dlq_url
   }
-  depends_on = [
-     aws_cloudwatch_log_group.data_processor_logs,
-     var.lambda_execution_attachment,
-     var.lambda_execution_policy
-   ]
+  # depends_on = [
+  #    aws_cloudwatch_log_group.data_processor_logs,
+  #    var.lambda_execution_attachment,
+  #    var.lambda_execution_policy
+  #  ]
 
   tags = merge(var.common_tags,{
     Name = var.lambda_function_name

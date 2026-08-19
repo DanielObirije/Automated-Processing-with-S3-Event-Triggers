@@ -23,11 +23,11 @@ resource "aws_lambda_function" "error_handler" {
      SNS_TOPIC_ARN = var.sns_topic_arn
     }
   }
-  depends_on = [
-    aws_cloudwatch_log_group.error_handler_logs,
-     var.lambda_execution_attachment,
-     var.lambda_execution_policy
-   ]
+  # depends_on = [
+  #   aws_cloudwatch_log_group.error_handler_logs,
+  #    var.lambda_execution_attachment,
+  #    var.lambda_execution_policy
+  #  ]
 
   tags = merge(var.common_tags,{
     Name = var.lambda_function_name

@@ -62,15 +62,15 @@ variable "common_tags" {
   type        = map(string)
 }
 
-variable "lambda_execution_attachment"  {
-  description = "ARN of the lambda execuation attachment"
-  type        = string
-}
+# variable "lambda_execution_attachment"  {
+#   description = "ARN of the lambda execuation attachment"
+#   type        = string
+# }
 
-variable "lambda_execution_policy" {
-  description = "ARN of the lambda execuation policy"
-  type        = string
-}
+# variable "lambda_execution_policy" {
+#   description = "ARN of the lambda execuation policy"
+#   type        = string
+# }
 
 
 variable "cloudwatch_log_retention" {

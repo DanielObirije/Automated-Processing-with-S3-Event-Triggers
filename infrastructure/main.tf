@@ -50,11 +50,12 @@ module "lambda" {
    dlq_arn  =  module.sqs.dlq_arn
    dlq_url  = module.sqs.dlq_url
    common_tags =  local.common_tags
-   lambda_execution_attachment =  module.iam.lambda_execution_role_policy_attachment
-  lambda_execution_policy =  module.iam.lambda_execution_role_policy
+  #  lambda_execution_attachment =  module.iam.lambda_execution_role_policy_attachment
+  # lambda_execution_policy =  module.iam.lambda_execution_role_policy
   error_handler_name = local.error_handler_name
   sns_topic_arn =  module.sns.sns_arn
-   s3_bucket_arn = module.s3.bucket_arn
+  s3_bucket_arn = module.s3.bucket_arn
+  depends_on = [ module.iam ]
 }
 
 module "sns" {

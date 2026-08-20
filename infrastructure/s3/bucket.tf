@@ -33,7 +33,7 @@ resource "aws_s3_bucket_public_access_block" "data_processing_bucket_access" {
 }
 
 resource "aws_s3_bucket_notification" "data_processing_notification" {
-  bucket = aws_s3_bucket.data_processing_bucket.arn
+  bucket = aws_s3_bucket.data_processing_bucket.id
   lambda_function {
     lambda_function_arn = var.lambda_function_arn
     events = ["s3:ObjectCreated:*"]

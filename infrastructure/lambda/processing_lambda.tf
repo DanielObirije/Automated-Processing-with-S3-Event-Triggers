@@ -24,7 +24,7 @@ resource "aws_lambda_function" "data_processor" {
     }
   }
   dead_letter_config {
-    target_arn = var.dlq_url
+    target_arn = var.dlq_arn
   }
   # depends_on = [
   #    aws_cloudwatch_log_group.data_processor_logs,
